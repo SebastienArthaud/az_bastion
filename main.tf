@@ -4,7 +4,7 @@ locals {
 }
 
 module "public_ip_address" {
-  source             = "git::https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_public-ip-address.git"
+  source             = "github.com/SebastienArthaud/az_public-ip-address.git"
   resourcegroup_name = var.resourcegroup_name
   ip_name            = local.public_ip_address_name
   location           = var.location

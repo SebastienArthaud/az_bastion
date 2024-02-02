@@ -1,5 +1,5 @@
 module "az_bastion" {
-  source                 = "../../az_bastion"
+  source                 = "github.com/SebastienArthaud/az_bastion.git"
   name                   = var.name
   location               = data.azurerm_resource_group.data_resourcegroup.location
   resourcegroup_name     = var.resourcegroup_name

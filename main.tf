@@ -5,7 +5,7 @@ locals {
 }
 
 module "public_ip_address" {
-  source             = "git::https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_public-ip-address.git"
+  source             = "github.com/SebastienArthaud/az_public-ip-address.git"
   resourcegroup_name = var.resourcegroup_name
   ip_name            = local.public_ip_address_name
   location           = var.location
@@ -13,7 +13,7 @@ module "public_ip_address" {
 
 module "az_network-security-group" {
   count              = var.create_nsg == true ? 1 : 0
-  source             = "git::https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_network-security-group.git"
+  source             = "github.com/SebastienArthaud/az_network-security-group.git"
   resourcegroup_name = var.resourcegroup_name
   location           = var.location
   name               = local.nsg_name

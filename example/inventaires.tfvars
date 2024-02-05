@@ -4,3 +4,4 @@ sku                    = "Standard"
 shareable_link_enabled = true
 subnet_name            = "AzureBastionSubnet"
 vnet_name              = "vnet-seb"
+create_nsg             = true

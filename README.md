@@ -20,7 +20,8 @@ Cloner le repot et effectuer un terraform init/plan/apply afin de voir un exempl
 
 | Name |
 |------|
-| [public_ip_address](https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_public-ip-address.git) |
+| [public_ip_address](https://github.com/SebastienArthaud/az_public-ip-address.git) |
+| [az_network-security-group](https://github.com/SebastienArthaud/az_network-security-group.git) |
 
 
 ## Resources provisionés

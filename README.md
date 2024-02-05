@@ -20,7 +20,7 @@ Cloner le repot et effectuer un terraform init/plan/apply afin de voir un exempl
 
 | Name |
 |------|
-| [public_ip_address](https://github.com/SebastienArthaud/az_public-ip-address.git) |
+| [public_ip_address](https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_public-ip-address.git) |
 
 
 ## Resources provisionés
@@ -43,6 +43,8 @@ Cloner le repot et effectuer un terraform init/plan/apply afin de voir un exempl
 | shareable_link_enabled | permet la connection à une machine en passant par un URL partagé par le Bastion (et pas par le portail AZURE) | `bool` | false | no |
 | vnet_name | Nom du vnet dans lequel se trouvera le Bastion | `string` | null | yes |
 | subnet_name | Nom du subnet dans lequel se trouvera le Bastion | `string` | null | yes |
+| create_nsg | NSG à créer pour le bastion si besoin | `bool` | false | no |
+| bastion_security_rule | Règles de sécurité du NSG à créer (si vous choisissez d'en créer un) | `list(object({})` | [] | no |
 | tags | Map des tags par défaut du bastion | `map(string)` | {} | no |
 
 
@@ -52,3 +54,5 @@ Cloner le repot et effectuer un terraform init/plan/apply afin de voir un exempl
 |------|-------------|
 | bastion_id | ID du bastion créé |
 | bastion_fqdn | fqdn du bastion créé |
+| bastion_subnet_id | ID du subnet dans lequel le bastion est créé |
+| bastion_public_ip | IP publique du bastion |

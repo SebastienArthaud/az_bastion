@@ -52,6 +52,117 @@ variable "subnet_name" {
   description = "Nom du subnet dans lequel se trouvera le Bastion"
 }
 
+variable "create_nsg" {
+  type        = bool
+  default     = false
+  description = "nsg à créer pour le bastion si besoin"
+}
+
+variable "bastion_security_rule" {
+  type = list(object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_ranges    = list(string)
+    source_address_prefix      = string
+    destination_address_prefix = string
+  }))
+  default = [
+    {
+      name                       = "AllowHttpsInbound"
+      priority                   = 120
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_ranges    = ["443"]
+      source_address_prefix      = "Internet"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "AllowGatewayManagerInbound"
+      priority                   = 130
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_ranges    = ["443"]
+      source_address_prefix      = "GatewayManager"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "AllowAzureLoadBalancerInbound"
+      priority                   = 140
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_ranges    = ["443"]
+      source_address_prefix      = "AzureLoadBalancer"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "AllowBastionHostCommunication"
+      priority                   = 150
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_ranges    = ["8080", "5701"]
+      source_address_prefix      = "VirtualNetwork"
+      destination_address_prefix = "VirtualNetwork"
+    },
+    {
+      name                       = "AllowSshRdpOutbound"
+      priority                   = 100
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_ranges    = ["22", "3389"]
+      source_address_prefix      = "*"
+      destination_address_prefix = "VirtualNetwork"
+    },
+    {
+      name                       = "AllowAzureCloudOutbound"
+      priority                   = 110
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_ranges    = ["443"]
+      source_address_prefix      = "*"
+      destination_address_prefix = "AzureCloud"
+    },
+    {
+      name                       = "AllowBastionCommunication"
+      priority                   = 120
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_ranges    = ["8080", "5701"]
+      source_address_prefix      = "*"
+      destination_address_prefix = "VirtualNetwork"
+    },
+    {
+      name                       = "AllowHttpOutbound"
+      priority                   = 130
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_ranges    = ["80"]
+      source_address_prefix      = "*"
+      destination_address_prefix = "Internet"
+    }
+  ]
+  description = "Règles de sécurité du NSG à créer"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Map des tags par défaut du bastion"

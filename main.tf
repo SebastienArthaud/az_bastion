@@ -1,13 +1,25 @@
 locals {
   public_ip_address_name = "${var.name}_bastion_public_ip"
   ipconfig_name          = "${var.name}_ipconfig1"
+  nsg_name               = "${var.name}_bastion_nsg"
 }
 
 module "public_ip_address" {
-  source             = "github.com/SebastienArthaud/az_public-ip-address.git"
+  source             = "git::https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_public-ip-address.git"
   resourcegroup_name = var.resourcegroup_name
   ip_name            = local.public_ip_address_name
   location           = var.location
+}
+
+module "az_network-security-group" {
+  count              = var.create_nsg == true ? 1 : 0
+  source             = "git::https://gitlab.devolab.cloud/m_cloud_lyon/az-module-tf/az_network-security-group.git"
+  resourcegroup_name = var.resourcegroup_name
+  location           = var.location
+  name               = local.nsg_name
+  security_rule      = var.bastion_security_rule
+  subnet_id          = data.azurerm_subnet.bastion_subnet.id
+
 }
 
 

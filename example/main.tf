@@ -1,5 +1,5 @@
 module "az_bastion" {
-  source                 = "github.com/SebastienArthaud/az_bastion.git"
+  source                 = "../../az_bastion"
   name                   = var.name
   location               = data.azurerm_resource_group.data_resourcegroup.location
   resourcegroup_name     = var.resourcegroup_name
@@ -7,4 +7,5 @@ module "az_bastion" {
   shareable_link_enabled = var.shareable_link_enabled
   subnet_name            = var.subnet_name
   vnet_name              = var.vnet_name
+  create_nsg             = true
 }

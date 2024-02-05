@@ -34,3 +34,9 @@ variable "subnet_name" {
   type        = string
   description = "Nom du subnet dans lequel se trouvera le Bastion"
 }
+
+variable "create_nsg" {
+  type        = bool
+  default     = false
+  description = "nsg à créer pour le bastion si besoin"
+}
